@@ -3,6 +3,7 @@ import Editor from '@monaco-editor/react';
 import type { RequestState } from '../types';
 import type { Variable } from '../hooks/useVariables';
 import { isValidVariableKey } from '../hooks/useVariables';
+import { useTheme } from '../hooks/useTheme';
 
 type Tab = 'headers' | 'body' | 'variables';
 
@@ -25,6 +26,7 @@ export default function RequestEditor({
 }: Props) {
   const [tab, setTab] = useState<Tab>('body');
   const [expanded, setExpanded] = useState(false);
+  const { current: themeConfig } = useTheme();
 
   const addHeader = () =>
     onChange({ headers: [...request.headers, { key: '', value: '', enabled: true }] });
@@ -40,28 +42,28 @@ export default function RequestEditor({
     onChange({ headers: request.headers.filter((_, i) => i !== idx) });
 
   return (
-    <div className="flex flex-col bg-slate-800 rounded-none overflow-hidden">
+    <div className="flex flex-col bg-[var(--surface-2)] rounded-none overflow-hidden">
       {/* Tabs */}
-      <div className="flex border-b border-slate-700">
+      <div className="flex border-b border-[var(--border)]">
         {(['headers', 'body', 'variables'] as Tab[]).map((t) => (
           <button
             key={t}
             onClick={() => setTab(t)}
             className={`px-4 py-2 text-sm font-medium capitalize transition
-              ${tab === t ? 'text-white border-b-2 border-blue-500' : 'text-slate-400 hover:text-slate-200'}`}
+              ${tab === t ? 'text-[var(--text-primary)] border-b-2 border-[var(--brand-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
           >
             {t}
             {t === 'headers' && request.headers.length > 0 && (
-              <span className="ml-1 text-xs text-slate-500">({request.headers.length})</span>
+              <span className="ml-1 text-xs text-[var(--text-muted)]">({request.headers.length})</span>
             )}
             {t === 'variables' && variables.length > 0 && (
-              <span className="ml-1 text-xs text-slate-500">({variables.length})</span>
+              <span className="ml-1 text-xs text-[var(--text-muted)]">({variables.length})</span>
             )}
           </button>
         ))}
         <button
           onClick={() => setExpanded((v) => !v)}
-          className="ml-auto px-3 text-xs text-slate-500 hover:text-slate-300 transition"
+          className="ml-auto px-3 text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition"
           title={expanded ? 'Collapse' : 'Expand'}
         >
           {expanded ? '▼ Collapse' : '▲ Expand'}
@@ -77,25 +79,25 @@ export default function RequestEditor({
                 type="checkbox"
                 checked={h.enabled}
                 onChange={(e) => updateHeader(i, 'enabled', e.target.checked)}
-                className="accent-blue-500"
+                className="accent-[var(--brand-primary)]"
               />
               <input
                 placeholder="Header name"
                 value={h.key}
                 onChange={(e) => updateHeader(i, 'key', e.target.value)}
-                className="flex-1 bg-slate-700 rounded px-2 py-1 text-sm text-white font-mono
-                           placeholder:text-slate-500 outline-none"
+                className="flex-1 bg-[var(--surface-3)] rounded px-2 py-1 text-sm text-[var(--text-primary)] font-mono
+                           placeholder:text-[var(--text-muted)] outline-none"
               />
               <input
                 placeholder="Value"
                 value={h.value}
                 onChange={(e) => updateHeader(i, 'value', e.target.value)}
-                className="flex-1 bg-slate-700 rounded px-2 py-1 text-sm text-white font-mono
-                           placeholder:text-slate-500 outline-none"
+                className="flex-1 bg-[var(--surface-3)] rounded px-2 py-1 text-sm text-[var(--text-primary)] font-mono
+                           placeholder:text-[var(--text-muted)] outline-none"
               />
               <button
                 onClick={() => removeHeader(i)}
-                className="text-slate-500 hover:text-red-400 text-sm px-1"
+                className="text-[var(--text-muted)] hover:text-[var(--method-delete)] text-sm px-1"
               >
                 ✕
               </button>
@@ -103,7 +105,7 @@ export default function RequestEditor({
           ))}
           <button
             onClick={addHeader}
-            className="text-sm text-blue-400 hover:text-blue-300 transition"
+            className="text-sm text-[var(--method-post)] hover:text-[var(--brand-primary)] transition"
           >
             + Add header
           </button>
@@ -115,7 +117,7 @@ export default function RequestEditor({
         <div className={expanded ? 'h-[60vh]' : 'h-48'}>
           <Editor
             defaultLanguage="json"
-            theme="vs-dark"
+            theme={themeConfig.monacoTheme}
             value={request.body}
             onChange={(v) => onChange({ body: v ?? '' })}
             options={{
@@ -133,8 +135,8 @@ export default function RequestEditor({
       {/* Variables tab */}
       {tab === 'variables' && (
         <div className={`p-3 space-y-2 overflow-y-auto ${expanded ? 'max-h-[60vh]' : 'max-h-60'}`}>
-          <p className="text-xs text-slate-500 mb-1">
-            Use <code className="text-slate-400">{`{{name}}`}</code> in paths, headers, and body. Keys: alphanumerics and <code className="text-slate-400">.</code> only.
+          <p className="text-xs text-[var(--text-muted)] mb-1">
+            Use <code className="text-[var(--text-secondary)]">{`{{name}}`}</code> in paths, headers, and body. Keys: alphanumerics and <code className="text-[var(--text-secondary)]">.</code> only.
           </p>
           {variables.map((v, i) => (
             <div key={i} className="flex items-center gap-2">
@@ -142,8 +144,8 @@ export default function RequestEditor({
                 placeholder="variable.name"
                 value={v.key}
                 onChange={(e) => onSetVariable(i, 'key', e.target.value)}
-                className={`w-48 bg-slate-700 rounded px-2 py-1 text-sm text-white font-mono
-                           placeholder:text-slate-500 outline-none ${
+                className={`w-48 bg-[var(--surface-3)] rounded px-2 py-1 text-sm text-[var(--text-primary)] font-mono
+                           placeholder:text-[var(--text-muted)] outline-none ${
                              v.key && !isValidVariableKey(v.key) ? 'ring-1 ring-red-500' : ''
                            }`}
               />
@@ -151,12 +153,12 @@ export default function RequestEditor({
                 placeholder="value"
                 value={v.value}
                 onChange={(e) => onSetVariable(i, 'value', e.target.value)}
-                className="flex-1 bg-slate-700 rounded px-2 py-1 text-sm text-white font-mono
-                           placeholder:text-slate-500 outline-none"
+                className="flex-1 bg-[var(--surface-3)] rounded px-2 py-1 text-sm text-[var(--text-primary)] font-mono
+                           placeholder:text-[var(--text-muted)] outline-none"
               />
               <button
                 onClick={() => onRemoveVariable(i)}
-                className="text-slate-500 hover:text-red-400 text-sm px-1"
+                className="text-[var(--text-muted)] hover:text-[var(--method-delete)] text-sm px-1"
               >
                 ✕
               </button>
@@ -164,7 +166,7 @@ export default function RequestEditor({
           ))}
           <button
             onClick={onAddVariable}
-            className="text-sm text-blue-400 hover:text-blue-300 transition"
+            className="text-sm text-[var(--method-post)] hover:text-[var(--brand-primary)] transition"
           >
             + Add variable
           </button>
