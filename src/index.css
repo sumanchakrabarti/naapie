@@ -1,11 +1,14 @@
 @import "tailwindcss";
+@import "./themes/default-dark.css";
+@import "./themes/default-light.css";
+@import "./themes/minecraft-dark.css";
 
 html,
 body,
 #root {
   height: 100%;
   margin: 0;
-  background-color: #0f172a;
-  color: #e2e8f0;
+  background-color: var(--surface-0);
+  color: var(--text-primary);
   font-family: system-ui, -apple-system, sans-serif;
 }

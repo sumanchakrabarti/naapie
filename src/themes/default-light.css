@@ -1,0 +1,29 @@
+/* ── Default Light Theme ──────────────────────────────
+ * Clean light theme with soft grays.
+ */
+
+[data-theme="default-light"] {
+  --surface-0: #f8fafc;
+  --surface-1: #f1f5f9;
+  --surface-2: #e2e8f0;
+  --surface-3: #cbd5e1;
+  --border: #cbd5e1;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --brand-primary: #2563eb;
+  --brand-primary-hover: #1d4ed8;
+  --brand-primary-active: #1e40af;
+
+  --status-success: #16a34a;
+  --status-warning: #d97706;
+  --status-error: #dc2626;
+
+  --method-get: #16a34a;
+  --method-post: #2563eb;
+  --method-put: #d97706;
+  --method-patch: #ea580c;
+  --method-delete: #dc2626;
+}

@@ -15,6 +15,12 @@ export interface LocalConfig {
   sampleQueries?: SampleQuery[];
   /** Default headers pre-populated for every new request. */
   defaultHeaders?: RequestState['headers'];
+  /** Brand colors (CSS color values). Applied as CSS custom properties. */
+  brandColors?: {
+    primary?: string;
+    primaryHover?: string;
+    primaryActive?: string;
+  };
 }
 
 const config: LocalConfig = {
@@ -41,6 +47,13 @@ const config: LocalConfig = {
   //   { key: 'Content-Type', value: 'application/json', enabled: true },
   //   { key: 'X-Custom-Header', value: 'my-value', enabled: true },
   // ],
+
+  // Uncomment to set brand colors:
+  // brandColors: {
+  //   primary: '#7c3aed',       // violet-600
+  //   primaryHover: '#6d28d9',  // violet-700
+  //   primaryActive: '#5b21b6', // violet-800
+  // },
 };
 
 export default config;

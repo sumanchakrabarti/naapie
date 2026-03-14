@@ -1,0 +1,29 @@
+/* ── Default Dark Theme ───────────────────────────────
+ * Clean slate-blue dark theme.
+ */
+
+[data-theme="default-dark"] {
+  --surface-0: #0f172a;
+  --surface-1: #1a2236;
+  --surface-2: #1e293b;
+  --surface-3: #334155;
+  --border: #334155;
+
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --brand-primary: #2563eb;
+  --brand-primary-hover: #1d4ed8;
+  --brand-primary-active: #1e40af;
+
+  --status-success: #16a34a;
+  --status-warning: #d97706;
+  --status-error: #dc2626;
+
+  --method-get: #4ade80;
+  --method-post: #60a5fa;
+  --method-put: #fbbf24;
+  --method-patch: #fb923c;
+  --method-delete: #f87171;
+}

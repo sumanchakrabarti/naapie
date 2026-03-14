@@ -14,6 +14,11 @@ interface LocalConfig {
   baseUrls?: Array<{ label: string; url: string }>;
   sampleQueries?: SampleQuery[];
   defaultHeaders?: RequestState['headers'];
+  brandColors?: {
+    primary?: string;
+    primaryHover?: string;
+    primaryActive?: string;
+  };
 }
 
 let localConfig: LocalConfig = {};
@@ -29,3 +34,4 @@ try {
 export const resolvedBaseUrls = localConfig.baseUrls ?? builtinBaseUrls;
 export const resolvedSampleQueries = localConfig.sampleQueries ?? builtinSampleQueries;
 export const resolvedDefaultHeaders = localConfig.defaultHeaders ?? builtinHeaders;
+export const resolvedBrandColors = localConfig.brandColors;

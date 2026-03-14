@@ -2,18 +2,18 @@ import { useState } from 'react';
 import type { HistoryEntry, RequestState } from '../types';
 
 const methodColors: Record<string, string> = {
-  GET: 'text-green-400',
-  POST: 'text-blue-400',
-  PUT: 'text-amber-400',
-  PATCH: 'text-orange-400',
-  DELETE: 'text-red-400',
+  GET: 'text-[var(--method-get)]',
+  POST: 'text-[var(--method-post)]',
+  PUT: 'text-[var(--method-put)]',
+  PATCH: 'text-[var(--method-patch)]',
+  DELETE: 'text-[var(--method-delete)]',
 };
 
 const statusColor = (code: number) => {
-  if (code === 0) return 'text-red-400';
-  if (code < 300) return 'text-green-400';
-  if (code < 400) return 'text-amber-400';
-  return 'text-red-400';
+  if (code === 0) return 'text-[var(--method-delete)]';
+  if (code < 300) return 'text-[var(--method-get)]';
+  if (code < 400) return 'text-[var(--method-put)]';
+  return 'text-[var(--method-delete)]';
 };
 
 interface Props {
@@ -30,7 +30,7 @@ export default function HistoryPanel({ entries, onSelect, onRemove, onClear }: P
     return (
       <button
         onClick={() => setOpen(true)}
-        className="text-xs text-slate-500 hover:text-slate-300 transition px-2 py-1"
+        className="text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition px-2 py-1"
       >
         History ({entries.length})
       </button>
@@ -73,21 +73,21 @@ export default function HistoryPanel({ entries, onSelect, onRemove, onClear }: P
   };
 
   return (
-    <div className="bg-slate-800 border border-slate-700 p-3 space-y-2">
+    <div className="bg-[var(--surface-2)] border border-[var(--border)] p-3 space-y-2">
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold text-slate-300">History</span>
+        <span className="text-sm font-semibold text-[var(--text-secondary)]">History</span>
         <div className="flex gap-2">
           {entries.length > 0 && (
             <button
               onClick={onClear}
-              className="text-xs text-red-400 hover:text-red-300 transition"
+              className="text-xs text-[var(--method-delete)] hover:text-[var(--status-error)] transition"
             >
               Clear
             </button>
           )}
           <button
             onClick={() => setOpen(false)}
-            className="text-xs text-slate-500 hover:text-slate-300 transition"
+            className="text-xs text-[var(--text-muted)] hover:text-[var(--text-secondary)] transition"
           >
             ✕
           </button>
@@ -95,38 +95,38 @@ export default function HistoryPanel({ entries, onSelect, onRemove, onClear }: P
       </div>
 
       {entries.length === 0 ? (
-        <p className="text-xs text-slate-500 text-center py-2">No history yet</p>
+        <p className="text-xs text-[var(--text-muted)] text-center py-2">No history yet</p>
       ) : (
         <div className="max-h-48 overflow-y-auto space-y-1">
           {entries.map((entry) => (
             <div
               key={entry.id}
-              className="flex items-center gap-2 px-2 py-1 hover:bg-slate-700/60 transition group"
+              className="flex items-center gap-2 px-2 py-1 hover:bg-[var(--surface-3)]/60 transition group"
               title={buildTooltip(entry)}
             >
               <button
                 onClick={() => handleSelect(entry)}
                 className="flex items-center gap-2 flex-1 min-w-0 text-left"
               >
-                <span className={`text-[10px] font-bold font-mono w-10 shrink-0 ${methodColors[entry.request.method] ?? 'text-slate-400'}`}>
+                <span className={`text-[10px] font-bold font-mono w-10 shrink-0 ${methodColors[entry.request.method] ?? 'text-[var(--text-secondary)]'}`}>
                   {entry.request.method}
                 </span>
-                <span className="text-xs text-slate-300 truncate flex-1 font-mono">
+                <span className="text-xs text-[var(--text-secondary)] truncate flex-1 font-mono">
                   {entry.request.path}
                   {entry.resolvedPath && entry.resolvedPath !== entry.request.path && (
-                    <span className="text-slate-500 ml-1">→ {entry.resolvedPath}</span>
+                    <span className="text-[var(--text-muted)] ml-1">→ {entry.resolvedPath}</span>
                   )}
                 </span>
                 <span className={`text-[10px] font-mono ${statusColor(entry.status)}`}>
                   {entry.status || 'ERR'}
                 </span>
-                <span className="text-[10px] text-slate-600">
+                <span className="text-[10px] text-[var(--text-muted)]">
                   {formatTime(entry.timestamp)}
                 </span>
               </button>
               <button
                 onClick={() => onRemove(entry.id)}
-                className="text-slate-600 hover:text-red-400 text-xs px-1 opacity-0 group-hover:opacity-100 transition"
+                className="text-[var(--text-muted)] hover:text-[var(--method-delete)] text-xs px-1 opacity-0 group-hover:opacity-100 transition"
                 title="Remove"
               >
                 ✕

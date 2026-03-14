@@ -1,0 +1,30 @@
+/* ── Dark Minecraft Theme ──────────────────────────────
+ * Inspired by Minecraft's dark stone UI and pixel aesthetic.
+ * Earthy tones, mossy greens, and warm stone grays.
+ */
+
+[data-theme="minecraft-dark"] {
+  --surface-0: #1a1a1a;    /* obsidian / void */
+  --surface-1: #2b2b2b;    /* stone */
+  --surface-2: #3c3c3c;    /* cobblestone */
+  --surface-3: #4e4e4e;    /* gravel */
+  --border: #5a5a4a;       /* mossy stone brick edge */
+
+  --text-primary: #d4c8a0;  /* enchantment table gold */
+  --text-secondary: #9e9878; /* sandstone text */
+  --text-muted: #6b6b5a;    /* weathered stone */
+
+  --brand-primary: #4a7a3b;        /* creeper green */
+  --brand-primary-hover: #3d6630;  /* dark oak leaves */
+  --brand-primary-active: #2e5022; /* spruce leaves */
+
+  --status-success: #55a630;  /* emerald */
+  --status-warning: #d4a017;  /* gold ingot */
+  --status-error: #c0392b;   /* redstone */
+
+  --method-get: #55a630;     /* emerald green */
+  --method-post: #3b82c4;    /* diamond blue */
+  --method-put: #d4a017;     /* gold */
+  --method-patch: #c77a20;   /* copper */
+  --method-delete: #c0392b;  /* redstone */
+}
